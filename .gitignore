@@ -3,6 +3,8 @@ assets-source/
 *.tar.gz
 *.log
 node_modules/
+.npm-cache/
+.vercel/
 .env*
 
 .openai/

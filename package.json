@@ -1,0 +1,12 @@
+{
+  "name": "ali-baba-doner-kebab-demo",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Buildless restaurant pitch with a browser-local demo cart",
+  "scripts": {
+    "test": "node --test --test-isolation=none tests/*.test.cjs"
+  },
+  "devDependencies": {
+    "jsdom": "30.1.3"
+  }
+}

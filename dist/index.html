@@ -15,6 +15,9 @@
   <link rel="preload" href="assets/fonts/dm-sans-latin.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="assets/hero-doner.webp" as="image" fetchpriority="high">
   <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="cart.css">
+  <script src="menu-data.js" defer></script>
+  <script src="cart-core.js" defer></script>
   <script src="app.js" defer></script>
   <title>Ali Baba Doner Kebab — Döner. Done Right.</title>
 </head>
@@ -29,6 +32,7 @@
     </nav>
     <div class="header-actions">
       <span class="header-tag">SPANISH ROOTS. BIG FLAVOUR.</span>
+      <button class="cart-toggle" data-cart-open aria-label="Open cart, 0 items"><svg class="icon" aria-hidden="true"><use href="#bag"/></svg><span class="cart-label">Cart</span><span class="cart-count" id="cart-count" aria-hidden="true">0</span></button>
       <button class="button button-small button-red" data-order>Order now <svg class="icon"><use href="#arrow-up-right"/></svg></button>
       <button class="mobile-toggle" aria-label="Open navigation" aria-expanded="false" aria-controls="mobile-nav"><span></span><span></span></button>
     </div>
@@ -58,9 +62,10 @@
         <div><p class="eyebrow dark"><span class="red-dot"></span> COME HUNGRY. LEAVE HAPPY.</p><h2 id="menu-title">MEET YOUR<br>NEXT <span class="serif-word">craving.</span></h2></div>
         <p class="section-intro">The classics you love. The flavour you come back for.<br>Find a little something for every appetite.</p>
       </div>
-      <div class="menu-toolbar"><div class="menu-filters" role="group" aria-label="Filter menu"><button class="filter is-active" data-filter="favourites" aria-pressed="true">The favourites <span>✳</span></button><button class="filter" data-filter="doner" aria-pressed="false">Döner & wraps</button><button class="filter" data-filter="pizza" aria-pressed="false">Pizza</button><button class="filter" data-filter="sides" aria-pressed="false">Sides & sips</button></div><span class="menu-count" aria-hidden="true">03 GOOD REASONS TO DIG IN</span></div>
+      <div class="menu-toolbar"><div class="menu-filters" role="group" aria-label="Filter menu"><button class="filter is-active" data-filter="favourites" aria-pressed="true">Favourites <span>✳</span></button><button class="filter" data-filter="all" aria-pressed="false">All menu</button><button class="filter" data-filter="doner" aria-pressed="false">Döner & wraps</button><button class="filter" data-filter="pizza" aria-pressed="false">Pizza</button><button class="filter" data-filter="burgers" aria-pressed="false">Burgers</button><button class="filter" data-filter="sides" aria-pressed="false">Sides</button><button class="filter" data-filter="drinks" aria-pressed="false">Drinks</button></div><span class="menu-count" aria-hidden="true">MADE FOR YOUR CRAVINGS</span></div>
+      <p class="menu-demo-note"> Sample menu & prices in PKR for this website concept. Real orders are available through our restaurant links.</p>
       <p class="sr-only" id="menu-status" role="status" aria-live="polite"></p><div class="menu-grid" id="menu-grid"></div>
-      <div class="menu-bottom"><p>Made for your appetite. Ask your branch about options, prices and allergens.</p><a class="text-link" href="https://www.foodpanda.pk/restaurant/et5i/ali-baba-doner-kebab" target="_blank" rel="noopener noreferrer">View Giga Mall delivery menu <svg class="icon"><use href="#arrow-up-right"/></svg></a></div>
+      <div class="menu-bottom"><p>Have an allergy? Check ingredients with your restaurant before ordering.</p><button class="text-link contact-order-link" data-contact-order>Order with the restaurant <svg class="icon"><use href="#arrow-up-right"/></svg></button></div>
       <noscript><p>Discover our chicken döner wrap, döner platter and döner pizza. <a href="https://www.foodpanda.pk/restaurant/et5i/ali-baba-doner-kebab">Browse the delivery menu</a> or call 0310 0555007 for DHA branch details.</p></noscript>
     </section>
 
@@ -90,6 +95,37 @@
 
   <dialog id="order-dialog" class="order-dialog" aria-labelledby="order-title"><div class="dialog-inner"><button class="dialog-close" aria-label="Close order options"><svg class="icon"><use href="#close"/></svg></button><p class="eyebrow dark"><span class="red-dot"></span> GOOD FOOD STARTS HERE</p><h2 id="order-title">LET’S <span class="serif-word">eat.</span></h2><p>Pick your place. We’ll take you to the right people.</p><a class="order-option" href="https://www.foodpanda.pk/restaurant/et5i/ali-baba-doner-kebab" target="_blank" rel="noopener noreferrer"><div><small>GIGA MALL · ISLAMABAD</small><strong>Order on Foodpanda</strong><span>See the live delivery menu and prices</span></div><svg class="icon"><use href="#arrow-up-right"/></svg></a><a class="order-option" href="tel:+923100555007"><div><small>CENTRAL PARK, DHA 2 · ISLAMABAD</small><strong>Call 0310 0555007</strong><span>Ask about takeaway and delivery</span></div><svg class="icon"><use href="#phone"/></svg></a><a class="order-option" href="tel:+34964919171"><div><small>PUERTO DEPORTIVO · BENICARLÓ</small><strong>Call +34 964 91 91 71</strong><span>Contact the restaurant in Spain</span></div><svg class="icon"><use href="#phone"/></svg></a><p class="dialog-note">Menu, prices, service areas and hours are confirmed by each restaurant.</p></div></dialog>
   <dialog id="food-dialog" class="food-dialog" aria-labelledby="food-title"><div class="food-dialog-inner" id="food-detail"></div></dialog>
-  <svg class="svg-library" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><symbol id="arrow-right" viewBox="0 0 24 24"><path d="M4 12h15M13 5l7 7-7 7"/></symbol><symbol id="arrow-up-right" viewBox="0 0 24 24"><path d="M6 18 18 6M6 6h12v12"/></symbol><symbol id="arrow-down" viewBox="0 0 24 24"><path d="M12 4v16m-6-6 6 6 6-6"/></symbol><symbol id="arrow-up" viewBox="0 0 24 24"><path d="M12 20V4m-6 6 6-6 6 6"/></symbol><symbol id="pin" viewBox="0 0 24 24"><path d="M20 10c0 6-8 11-8 11S4 16 4 10a8 8 0 1 1 16 0Z"/><circle cx="12" cy="10" r="2.5"/></symbol><symbol id="phone" viewBox="0 0 24 24"><path d="m8 3 3 5-3 3a14 14 0 0 0 5 5l3-3 5 3c-1 4-3 5-6 4C8 18 3 13 3 7c0-3 2-4 5-4Z"/></symbol><symbol id="instagram" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><path d="M17 6.5h.5"/></symbol><symbol id="close" viewBox="0 0 24 24"><path d="m6 6 12 12M6 18 18 6"/></symbol><symbol id="flame" viewBox="0 0 24 24"><path d="M13 2c1 7-6 7-3 12 0-3 3-3 4-6 1 3 5 5 5 9a7 7 0 0 1-14 0c0-6 7-8 8-15Z"/></symbol></svg>
+  <dialog id="cart-dialog" class="cart-dialog" aria-labelledby="cart-title">
+    <div class="cart-shell">
+      <div class="cart-header"><div><p class="eyebrow dark"><span class="red-dot"></span> GOOD CHOICES. GREAT FLAVOUR.</p><h2 id="cart-title">YOUR <span class="serif-word">bag.</span></h2></div><button class="dialog-close" aria-label="Close cart"><svg class="icon"><use href="#close"/></svg></button></div>
+      <p class="cart-demo-banner">Demo ordering · Sample prices · No payment is taken</p>
+      <div class="cart-content">
+        <section id="cart-panel" aria-label="Cart items"><div class="cart-items" id="cart-items"></div></section>
+        <section id="checkout-panel" aria-labelledby="checkout-title" hidden>
+          <button class="checkout-back" data-cart-back><svg class="icon"><use href="#arrow-left"/></svg> Back to your bag</button>
+          <h3 id="checkout-title" class="checkout-title" tabindex="-1">THE FINAL <span class="serif-word">details.</span></h3>
+          <p class="checkout-intro">Try the checkout experience. Your details stay on this page and are cleared when checkout closes.</p>
+          <form id="checkout-form" class="checkout-form">
+            <fieldset class="fulfilment-fieldset"><legend>How would you like it?</legend><div class="fulfilment-options"><label><input type="radio" name="fulfilment" value="delivery" checked> Delivery <small>Rs 200 demo fee</small></label><label><input type="radio" name="fulfilment" value="pickup"> Pick up <small>No delivery fee</small></label></div></fieldset>
+            <div class="field"><label for="checkout-branch">Your restaurant</label><select id="checkout-branch" name="branch" required><option value="dha">Central Park, DHA 2 · Islamabad</option><option value="giga">Giga Mall · Islamabad</option></select></div>
+            <div class="field-row"><div class="field"><label for="checkout-name">Your name</label><input id="checkout-name" name="customerName" type="text" autocomplete="name" placeholder="e.g. Ali Khan" minlength="2" maxlength="80" required></div><div class="field"><label for="checkout-phone">Phone number</label><input id="checkout-phone" name="phone" type="tel" autocomplete="tel" inputmode="tel" placeholder="03XX XXXXXXX" maxlength="20" required aria-describedby="phone-hint"><small id="phone-hint">Pakistan mobile number</small></div></div>
+            <div class="field" id="address-field"><label for="checkout-address">Delivery address</label><textarea id="checkout-address" name="address" autocomplete="street-address" placeholder="House, street, area and a nearby landmark" rows="3" minlength="10" maxlength="300" required></textarea></div>
+            <div class="field"><label for="checkout-notes">Anything else? <span>(optional)</span></label><textarea id="checkout-notes" name="notes" placeholder="Special instructions for your order" rows="2" maxlength="300"></textarea></div>
+            <div class="checkout-payment"><svg class="icon"><use href="#cash"/></svg><div><strong id="payment-label">Cash on delivery</strong><p>Demo only. No payment will be collected.</p></div></div>
+            <dl class="checkout-summary" id="checkout-summary"></dl>
+            <p class="checkout-error" id="checkout-error" role="alert" hidden></p>
+            <button class="button button-red checkout-submit" type="submit">Create demo order <svg class="icon"><use href="#arrow-right"/></svg></button>
+            <p class="checkout-disclaimer">This is a presentation preview. It does not send an order to the restaurant.</p>
+          </form>
+        </section>
+        <section id="order-success" class="order-success" aria-labelledby="success-title" hidden></section>
+      </div>
+      <div class="cart-footer" id="cart-footer"><dl class="cart-totals" id="cart-totals"></dl><button class="button button-red cart-checkout" id="checkout-button" data-checkout>Continue to checkout <svg class="icon"><use href="#arrow-right"/></svg></button><button class="cart-continue" data-continue-shopping>Keep exploring the menu</button><button class="cart-real-order" data-contact-order>Want to order for real? Contact a restaurant <svg class="icon"><use href="#arrow-up-right"/></svg></button></div>
+    </div>
+  </dialog>
+  <button id="floating-cart" class="floating-cart" data-cart-open hidden><span id="floating-cart-summary"></span><strong>View cart</strong><svg class="icon" aria-hidden="true"><use href="#arrow-right"/></svg></button>
+  <p class="sr-only" id="cart-status" role="status" aria-live="polite"></p>
+  <p id="cart-toast" class="cart-toast" role="status" aria-live="polite" hidden></p>
+  <svg class="svg-library" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><symbol id="bag" viewBox="0 0 24 24"><path d="M5 7h14l1 14H4L5 7Z"/><path d="M8 8V6a4 4 0 0 1 8 0v2"/></symbol><symbol id="arrow-left" viewBox="0 0 24 24"><path d="M20 12H4m7-7-7 7 7 7"/></symbol><symbol id="check" viewBox="0 0 24 24"><path d="m5 12 4 4L19 6"/></symbol><symbol id="cash" viewBox="0 0 24 24"><rect x="2" y="5" width="20" height="14" rx="2"/><circle cx="12" cy="12" r="3"/><path d="M5 9h1m12 6h1"/></symbol><symbol id="arrow-right" viewBox="0 0 24 24"><path d="M4 12h15M13 5l7 7-7 7"/></symbol><symbol id="arrow-up-right" viewBox="0 0 24 24"><path d="M6 18 18 6M6 6h12v12"/></symbol><symbol id="arrow-down" viewBox="0 0 24 24"><path d="M12 4v16m-6-6 6 6 6-6"/></symbol><symbol id="arrow-up" viewBox="0 0 24 24"><path d="M12 20V4m-6 6 6-6 6 6"/></symbol><symbol id="pin" viewBox="0 0 24 24"><path d="M20 10c0 6-8 11-8 11S4 16 4 10a8 8 0 1 1 16 0Z"/><circle cx="12" cy="10" r="2.5"/></symbol><symbol id="phone" viewBox="0 0 24 24"><path d="m8 3 3 5-3 3a14 14 0 0 0 5 5l3-3 5 3c-1 4-3 5-6 4C8 18 3 13 3 7c0-3 2-4 5-4Z"/></symbol><symbol id="instagram" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><path d="M17 6.5h.5"/></symbol><symbol id="close" viewBox="0 0 24 24"><path d="m6 6 12 12M6 18 18 6"/></symbol><symbol id="flame" viewBox="0 0 24 24"><path d="M13 2c1 7-6 7-3 12 0-3 3-3 4-6 1 3 5 5 5 9a7 7 0 0 1-14 0c0-6 7-8 8-15Z"/></symbol></svg>
 </body>
 </html>
