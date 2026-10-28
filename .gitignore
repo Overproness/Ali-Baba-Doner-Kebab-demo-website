@@ -1,0 +1,9 @@
+assets-source/
+*-source.html
+*.tar.gz
+*.log
+node_modules/
+.env*
+
+.openai/
+ASSET-SOURCES.md
